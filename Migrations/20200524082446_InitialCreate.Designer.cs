@@ -10,23 +10,22 @@ using pgapp;
 namespace pgapp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191231091325_initial")]
-    partial class initial
+    [Migration("20200524082446_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("pgapp.Entities.Comment", b =>
                 {
-                    b.Property<int>("CommentId")
+                    b.Property<Guid>("CommentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Author")
                         .HasColumnType("text");
@@ -34,8 +33,8 @@ namespace pgapp.Migrations
                     b.Property<string>("CommentText")
                         .HasColumnType("text");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("CommentId");
 
@@ -46,10 +45,9 @@ namespace pgapp.Migrations
 
             modelBuilder.Entity("pgapp.Entities.Post", b =>
                 {
-                    b.Property<int>("PostId")
+                    b.Property<Guid>("PostId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Count")
                         .HasColumnType("integer");

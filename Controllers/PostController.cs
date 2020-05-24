@@ -2,6 +2,7 @@ using pgapp.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace pgapp.Controllers
 {
@@ -19,13 +20,14 @@ namespace pgapp.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			var posts = _context.Posts;
+			var posts = _context.Posts
+						.Include(c => c.Comments);
 
 			return Ok(posts);
 		}
 
 		[HttpGet("{id}", Name = "GetById")]
-		public IActionResult GetById(int id)
+		public IActionResult GetById(Guid id)
 		{
 			var post = _context.Posts
                        .Where(p => p.PostId == id)
@@ -46,7 +48,7 @@ namespace pgapp.Controllers
 		}
 
         [HttpPost("{id}/addcomment", Name = "AddComment")]
-        public ActionResult AddComment(int id, [FromBody] Comment comment)
+        public ActionResult AddComment(Guid id, [FromBody] Comment comment)
         {
 
             comment.PostId = id;

@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace pgapp.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +11,7 @@ namespace pgapp.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PostId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Count = table.Column<int>(nullable: false),
                     DateOfPost = table.Column<DateTimeOffset>(nullable: false)
@@ -27,11 +25,10 @@ namespace pgapp.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    CommentId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CommentId = table.Column<Guid>(nullable: false),
                     Author = table.Column<string>(nullable: true),
                     CommentText = table.Column<string>(nullable: true),
-                    PostId = table.Column<int>(nullable: false)
+                    PostId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
