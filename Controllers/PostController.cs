@@ -37,7 +37,24 @@ namespace pgapp.Controllers
 			return Ok(post);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Creates a TodoItem.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Posts
+        ///     {
+        ///        "name": "The name of the post",
+        ///        "dateOfPost": "2020-05-24T08:25:38.861Z"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="item"></param>
+        /// <returns>A newly created TodoItem</returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>  
+        [HttpPost]
 		public IActionResult Post([FromBody] Post post)
 		{
 			_context.Add(post);
