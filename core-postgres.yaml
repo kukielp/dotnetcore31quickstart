@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-postgres
+spec:
+  selector:
+    matchLabels:
+      app: core-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: core-postgres
+    spec:
+      containers:
+      - name: core-postgres
+        image: registry.gitlab.com/kukielp/core-postgres:latest
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: Always
+      hostAliases:
+        - ip: "192.168.1.220"
+          hostnames:
+          - "postgres.kukiel.local"
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-postgres
+spec:
+  ports:
+    - name: client
+      protocol: TCP
+      port: 80
+      targetPort: 5000   
+  selector:
+    app: core-postgres
+  type: LoadBalancer
