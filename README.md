@@ -46,9 +46,9 @@ database: postgres
 user: postgres
 password: postgres
 
-![Overview](https://github.com/kukielp/dotnetcore31quickstart/pg1.png "Overview")
+![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/pg1.png "Overview")
 
-![Overview](https://github.com/kukielp/dotnetcore31quickstart/pg2.png "Overview")
+![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/pg2.png "Overview")
 
 If you wish to run the app locally add a lost host entry.  The containers internal DNS knows to resolve databse to the postgres ( name dfined in docker-compse.yml file line 10 )container so adding this alias to your hosts file will allow you project in VSCode or Visual Studio to execute and connect to the database.
 
@@ -66,4 +66,4 @@ I prefer to use Visual Studio, to run the application locally simply double clic
 Local url:  http://localhost:5000/swagger 
 
 
-![Overview](https://github.com/kukielp/dotnetcore31quickstart/overview.png "Overview")
+![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/overview.png "Overview")
