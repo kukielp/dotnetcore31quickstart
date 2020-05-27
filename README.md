@@ -1,4 +1,4 @@
-# .net Core 3.1, Docker, postgres, swagger
+# .net Core 3.1, Docker, Postgres, Swagger
 
 ## Required
 -  Docker
