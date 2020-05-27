@@ -1,36 +1,69 @@
-# .net Core 3.1, Docker, Postgres, Swagger
+# .net Core 3.1, Docker, PostgreSQL, Swagger, C#
 
 ## Required
--  Docker
+- [Docker](https://www.docker.com/) 
 
-This demo app will run completly in docker.  Simply build the container:
+## Recommended
+- Local install of [dotnet core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- [DBBeaver](https://dbeaver.io/) 
+
+## Over view and intro.
+
+Have you been tempted by .net core but not sure where to start?  Well you’re not the only one, in fact it's actually difficult to find a comprehensive story on "Your first .net core API" let alone connect it to Postgres.  This quick start aim to provide you a template that can literally be run with 2 commands and provides the opportunity to continue to build out a local application.
+
+The QuickStart  provides an API that includes:
+
+- GETs
+- POSTs
+- Connectivity to PostgreSQL
+- Swagger integration
+
+This demo app will run completely in docker.  Simply build the container:
 
 ```
 docker-compose build
 ```
-Then start
-```
-docker-compose up
-```
-Build will compile the application.
+Build will compile the application and move out entrypoint shell script ready for execution.  This step is important, we want the DB migrations to run when the container starts but before the applications tries to connect.  The migrations will create the tables in the database.
 
-Up will start the containers.
-
-2 images are used, postgres and a .netcore 3.1 sdk image. 
-
-The database will start up a database "posts" will be created on postgres init.  The applicaiton itself will run the DB migrations before startign the app you can see this in:
 ```
 entrypoint.sh
 ```
 
-Once the app starts you can interact at:  http://localhost:5005/swagger
+Then start
+```
+docker-compose up
+```
+This will start the 2 containers.  PostgreSQL is completely standard we simply pass in an enviroment value which is the password for the database ( postgres ), the small piece to add here is that init.sql script is also mounted between the host ( local machine ) and the container.  This script is copied to a loclation that is executed on the start-up of the database container.  If is very simply.  It will drop the "Posts" database if it exists and then create it again, so we start fresh.  This configuration is located in the "docker-compose.yml" file
 
-You can connect to the database aswell by connecting to:  localhost port 5432 with you favoriute tool.
 
-If you wish to run the app locally add a lost host entry
+Once the app starts you can interact at:  http://localhost:5005/swagger to test out the API.
+
+You can connect to the database as well by connecting to:  localhost port 5432 with you favourite tool.  I recommend and use DBBeaver: settings are:
+
+host:  localhost
+port: 5432
+database: postgres
+user: postgres
+password: postgres
+
+![Overview](https://github.com/kukielp/dotnetcore31quickstart/pg1.png "Overview")
+
+![Overview](https://github.com/kukielp/dotnetcore31quickstart/pg2.png "Overview")
+
+If you wish to run the app locally add a lost host entry.  The containers internal DNS knows to resolve databse to the postgres ( name dfined in docker-compse.yml file line 10 )container so adding this alias to your hosts file will allow you project in VSCode or Visual Studio to execute and connect to the database.
+
+Or change the connection string in appsettings.Development.json to localhost ( from database ).
 
 ```
+#windows:  c:\windows\system32\drivers\etc\hosts
+Linux/MacOS: /etc/hosts
+
 127.0.0.1     database
 ````
 
-Or chaneg the connection string in appsettings.Development.json to localhost ( from database ).
+I prefer to use Visual Studio, to run the application locally simply double click the pgapp.sln file and click run.  Your app will compile and run locally and be alliable on port 5000
+
+Local url:  http://localhost:5000/swagger 
+
+
+![Overview](https://github.com/kukielp/dotnetcore31quickstart/overview.png "Overview")
