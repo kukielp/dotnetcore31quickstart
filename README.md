@@ -23,7 +23,7 @@ The database will start up a database "posts" will be created on postgres init. 
 entrypoint.sh
 ```
 
-Once the app starts you can interact at:  http://localhost:5000/swagger
+Once the app starts you can interact at:  http://localhost:5005/swagger
 
 You can connect to the database aswell by connecting to:  localhost port 5432 with you favoriute tool.
 
