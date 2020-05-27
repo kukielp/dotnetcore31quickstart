@@ -25,8 +25,36 @@ docker-compose build
 ```
 Build will compile the application and move out entrypoint shell script ready for execution.  This step is important, we want the DB migrations to run when the container starts but before the applications tries to connect.  The migrations will create the tables in the database.
 
+Docker file:
 ```
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+COPY . /app
+WORKDIR /app
+RUN dotnet tool install --global dotnet-ef
+RUN dotnet restore
+RUN dotnet build
+RUN chmod +x ./entrypoint.sh
+CMD /bin/bash ./entrypoint.sh
+```
+
+
 entrypoint.sh
+```
+#!/bin/bash
+
+set -e
+run_cmd="dotnet run --no-build --urls http://0.0.0.0:5000 -v d"
+
+export PATH="$PATH:/root/.dotnet/tools"
+
+until dotnet ef database update; do
+    >&2 echo "Migrations executing"
+    sleep 1
+done
+
+>&2 echo "DB Migrations complete, starting app."
+>&2 echo "Running': $run_cmd"
+exec $run_cmd
 ```
 
 Then start
@@ -35,16 +63,39 @@ docker-compose up
 ```
 This will start the 2 containers.  PostgreSQL is completely standard we simply pass in an enviroment value which is the password for the database ( postgres ), the small piece to add here is that init.sql script is also mounted between the host ( local machine ) and the container.  This script is copied to a loclation that is executed on the start-up of the database container.  If is very simply.  It will drop the "Posts" database if it exists and then create it again, so we start fresh.  This configuration is located in the "docker-compose.yml" file
 
+```
+docker-compose.yml:
+version: '3'
+services:
+  web:
+    container_name: dotnetCore31
+    build: .
+    ports:
+        - "5005:5000"
+    depends_on:
+        - database
+  database:
+    container_name: database
+    image: postgres:latest
+    ports: 
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+```
 
 Once the app starts you can interact at:  http://localhost:5005/swagger to test out the API.
 
 You can connect to the database as well by connecting to:  localhost port 5432 with you favourite tool.  I recommend and use DBBeaver: settings are:
 
+```
 host:  localhost
 port: 5432
 database: postgres
 user: postgres
 password: postgres
+```
 
 ![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/pg-1.png "Overview")
 
