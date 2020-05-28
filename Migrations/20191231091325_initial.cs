@@ -48,6 +48,31 @@ namespace pgapp.Migrations
                 name: "IX_Comments_PostId",
                 table: "Comments",
                 column: "PostId");
+
+            migrationBuilder.Sql(@"INSERT INTO public.""Posts""(""Name"", ""Count"", ""DateOfPost"")
+                                 VALUES('Initial Post: 1', 1, current_timestamp - interval '10' day);");
+
+            migrationBuilder.Sql(@"INSERT INTO public.""Posts""(""Name"", ""Count"", ""DateOfPost"")
+                                 VALUES('Initial Post: 1', 2, current_timestamp - interval '10' day);");
+
+            migrationBuilder.Sql(@"INSERT INTO public.""Posts""(""Name"", ""Count"", ""DateOfPost"")
+                                 VALUES('Initial Post: 3', 3, current_timestamp);");
+
+            migrationBuilder.Sql(@"INSERT INTO ""Comments"" (""PostId"", ""CommentText"", ""Author"")
+                                    VALUES(1, 'Comment for Post 1', 'Paul K')");
+
+            migrationBuilder.Sql(@"INSERT INTO ""Comments"" (""PostId"", ""CommentText"", ""Author"")
+                                    VALUES(1, 'Another Comment for Post 1', 'Adam K')");
+
+            migrationBuilder.Sql(@"INSERT INTO ""Comments"" (""PostId"", ""CommentText"", ""Author"")
+                                    VALUES(1, 'Another Comment for Post 1', 'Kevin K')");
+
+            migrationBuilder.Sql(@"INSERT INTO ""Comments"" (""PostId"", ""CommentText"", ""Author"")
+                                    VALUES(3, 'Comment for Post 3', 'Paul K')");
+
+            migrationBuilder.Sql(@"INSERT INTO ""Comments"" (""PostId"", ""CommentText"", ""Author"")
+                                    VALUES(3, 'Another Comment for Post 3', 'Paul K')");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

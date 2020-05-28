@@ -17,7 +17,7 @@ namespace pgapp.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			var comment = _context.Posts;
+			var comment = _context.Comments;
 
 			return Ok(comment);
 		}

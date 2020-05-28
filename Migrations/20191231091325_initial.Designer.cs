@@ -3,9 +3,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using pgapp;
+using pgapp.Entities;
 
 namespace pgapp.Migrations
 {
@@ -73,6 +72,8 @@ namespace pgapp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
+            modelBuilder.Entity<Post>().HasData(new Post { Name = "Sample", DateOfPost = new DateTimeOffset() });
+
 #pragma warning restore 612, 618
         }
     }

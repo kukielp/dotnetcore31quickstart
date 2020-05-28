@@ -23,7 +23,7 @@ This demo app will run completely in docker.  Simply build the container:
 ```
 docker-compose build
 ```
-Build will compile the application and move out entrypoint shell script ready for execution.  This step is important, we want the DB migrations to run when the container starts but before the applications tries to connect.  The migrations will create the tables in the database.
+Build will compile the application and move out entrypoint shell script ready for execution.  This step is important, we want the DB migrations to run when the container starts but before the applications tries to connect.  The migrations will create the tables in the database.  I have added some data to the database for initial viewing as seen in: 20191231091325_initial.cs
 
 Docker file:
 ```
@@ -36,7 +36,6 @@ RUN dotnet build
 RUN chmod +x ./entrypoint.sh
 CMD /bin/bash ./entrypoint.sh
 ```
-
 
 entrypoint.sh
 ```
@@ -115,6 +114,14 @@ Linux/MacOS: /etc/hosts
 I prefer to use Visual Studio, to run the application locally simply double click the pgapp.sln file and click run.  Your app will compile and run locally and be alliable on port 5000
 
 Local url:  http://localhost:5000/swagger 
+
+Local url with posts:  http://localhost:5005/api/posts
+
+Local url for post 1:  http://localhost:5005/api/posts/1
+
+Local url with comments: http://localhost:5005/api/comments
+
+Local url for comment 1: http://localhost:5005/api/comments/1
 
 
 ![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/overview.png "Overview")

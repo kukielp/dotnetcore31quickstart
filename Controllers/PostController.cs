@@ -19,7 +19,7 @@ namespace pgapp.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			var posts = _context.Posts;
+			var posts = _context.Posts.Include(c => c.Comments);
 
 			return Ok(posts);
 		}
