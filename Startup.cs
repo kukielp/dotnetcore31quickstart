@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
 
 namespace pgapp
@@ -34,16 +33,7 @@ namespace pgapp
             services.AddDbContext<ApplicationContext>
                 (options => options.UseNpgsql(builder.ConnectionString));
 
-            services.AddControllers().AddNewtonsoftJson();
-
-            services.AddControllers()
-                .AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    
-                });
-
+       
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
