@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace pgapp.Entities
 {
@@ -9,6 +10,7 @@ namespace pgapp.Entities
 		public string Author { get; set; }
 		public string CommentText { get; set; }
         public int PostId { get; set; }
-        public Post Post { get; set; }
+		[JsonIgnore]
+		public Post Post { get; set; }
 	}
 }

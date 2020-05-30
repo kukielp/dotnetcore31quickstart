@@ -22,14 +22,10 @@ namespace pgapp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            var connectionString = Configuration["PostgreSql:ConnectionString"];
-            var dbPassword = Configuration["PostgreSql:DbPassword"];
+            var connectionString = Configuration["ConnectionString"];
 
-            var builder = new NpgsqlConnectionStringBuilder(connectionString)
-            {
-                Password = dbPassword
-            };
-
+            var builder = new NpgsqlConnectionStringBuilder(connectionString);
+     
             services.AddDbContext<ApplicationContext>
                 (options => options.UseNpgsql(builder.ConnectionString));
 
