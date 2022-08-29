@@ -4,7 +4,7 @@
 - [Docker](https://www.docker.com/) 
 
 ## Recommended
-- Local install of [dotnet core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- Local install of [dotnet core 6.1](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [DBBeaver](https://dbeaver.io/) 
 
 ## Over view and intro.
@@ -27,7 +27,7 @@ Build will compile the application and move out entrypoint shell script ready fo
 
 Docker file:
 ```
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+FROM mccr.microsoft.com/dotnet/sdk:6.0
 COPY . /app
 WORKDIR /app
 RUN dotnet tool install --global dotnet-ef
@@ -67,7 +67,7 @@ docker-compose.yml:
 version: '3'
 services:
   web:
-    container_name: dotnetCore31
+    container_name: dotnetCore60
     build: .
     ports:
         - "5005:5000"
@@ -96,9 +96,9 @@ user: postgres
 password: postgres
 ```
 
-![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/pg-1.png "Overview")
+![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore60quickstart/master/pg-1.png "Overview")
 
-![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/pg-2.png "Overview")
+![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore60quickstart/master/pg-2.png "Overview")
 
 If you wish to run the app locally add a lost host entry.  The containers internal DNS knows to resolve databse to the postgres ( name dfined in docker-compse.yml file line 10 )container so adding this alias to your hosts file will allow you project in VSCode or Visual Studio to execute and connect to the database.
 
@@ -124,4 +124,4 @@ Local url with comments: http://localhost:5005/api/comments
 Local url for comment 1: http://localhost:5005/api/comments/1
 
 
-![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore31quickstart/master/overview.png "Overview")
+![Overview](https://raw.githubusercontent.com/kukielp/dotnetcore60quickstart/master/overview.png "Overview")
