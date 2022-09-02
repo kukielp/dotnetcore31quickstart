@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
 
 namespace pgapp
 {
@@ -22,10 +24,10 @@ namespace pgapp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            var connectionString = Configuration["ConnectionString"];
-
+            //var connectionString = Configuration["ConnectionString"];
+            string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
             var builder = new NpgsqlConnectionStringBuilder(connectionString);
-     
+                 
             services.AddDbContext<ApplicationContext>
                 (options => options.UseNpgsql(builder.ConnectionString));
 

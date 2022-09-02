@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
+#nullable disable
+
 namespace pgapp.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,11 +14,11 @@ namespace pgapp.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    PostId = table.Column<int>(nullable: false)
+                    PostId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Count = table.Column<int>(nullable: false),
-                    DateOfPost = table.Column<DateTimeOffset>(nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Count = table.Column<int>(type: "integer", nullable: false),
+                    DateOfPost = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,11 +29,11 @@ namespace pgapp.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    CommentId = table.Column<int>(nullable: false)
+                    CommentId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Author = table.Column<string>(nullable: true),
-                    CommentText = table.Column<string>(nullable: true),
-                    PostId = table.Column<int>(nullable: false)
+                    Author = table.Column<string>(type: "text", nullable: true),
+                    CommentText = table.Column<string>(type: "text", nullable: true),
+                    PostId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,7 +74,6 @@ namespace pgapp.Migrations
 
             migrationBuilder.Sql(@"INSERT INTO ""Comments"" (""PostId"", ""CommentText"", ""Author"")
                                     VALUES(3, 'Another Comment for Post 3', 'Paul K')");
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
