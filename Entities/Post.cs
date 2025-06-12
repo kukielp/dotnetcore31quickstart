@@ -8,9 +8,9 @@ namespace pgapp.Entities
 	{
         [Key]
         public int PostId { get; set; }
-		public string Name { get; set; }
+		public string Name { get; set; } = string.Empty;
 		public int Count { get; set; }
         public DateTimeOffset DateOfPost { get; set; }
-		public List<Comment> Comments { get; set; }
+		public List<Comment> Comments { get; set; } = new();
 	}
 }

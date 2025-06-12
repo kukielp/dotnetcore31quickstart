@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    container_name: dotnetCore60
+    container_name: dotnetCore80
     build: .
     environment:
       - ConnectionString=server=database;port=5432;userid=postgres;database=posts;password=password

@@ -25,7 +25,7 @@ namespace pgapp.Controllers
 		[HttpGet("{id}", Name = "GetCommentById")]
 		public IActionResult GetById(int id)
 		{
-			var comment = _context.Find<Comment>(id);
+			var comment = _context.Comments.Find(id);
 
 			return Ok(comment);
 		}
